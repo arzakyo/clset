@@ -1,0 +1,21 @@
+# WinGet Portable-in-Zip manifest template
+# Replace <SHA256> after tagging a public release (or generate with: wingetcreate new <zip-url>)
+PackageIdentifier: arzakyo.clset
+PackageVersion: 0.2.0
+PackageLocale: en-US
+Publisher: arzakyo
+PackageName: clset
+License: MIT
+ShortDescription: Lightweight Windows CLI to schedule and toggle Claude 5-hour session window triggers.
+PackageUrl: https://github.com/arzakyo/clset
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: clset.cmd
+    PortableCommandAlias: clset
+Installers:
+  - Architecture: neutral
+    InstallerUrl: https://github.com/arzakyo/clset/releases/download/v0.2.0/clset-v0.2.0-windows.zip
+    InstallerSha256: <SHA256>
+ManifestType: singleton
+ManifestVersion: 1.6.0

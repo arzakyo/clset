@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Package portable zip
+        shell: pwsh
+        run: |
+          $ver = "${{ github.ref_name }}"
+          Compress-Archive -Path clset.ps1, clset.cmd, clset, LICENSE, README.md -DestinationPath "clset-$ver-windows.zip" -Force
+          (Get-FileHash "clset-$ver-windows.zip" -Algorithm SHA256).Hash | Out-File "clset-$ver-windows.zip.sha256" -Encoding ASCII
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            clset-*-windows.zip
+            clset-*-windows.zip.sha256
+          generate_release_notes: true
